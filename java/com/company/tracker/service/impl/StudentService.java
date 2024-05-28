@@ -1,4 +1,4 @@
-package com.company.tracker.service;
+package com.company.tracker.service.impl;
 
 public class StudentService {
 

@@ -3,7 +3,7 @@ package com.company.tracker.controller.command.impl;
 import com.company.tracker.controller.command.Command;
 import com.company.tracker.controller.command.CommandType;
 import com.company.tracker.controller.command.Input;
-import com.company.tracker.service.StudentService;
+import com.company.tracker.service.impl.StudentService;
 
 import java.util.ResourceBundle;
 
