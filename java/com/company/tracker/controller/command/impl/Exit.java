@@ -5,13 +5,23 @@ import com.company.tracker.controller.Server;
 import com.company.tracker.controller.command.Command;
 import com.company.tracker.controller.command.CommandType;
 
+import java.util.ResourceBundle;
+
+import static com.company.tracker.controller.ResponseType.EXIT;
+
 public class Exit implements Command {
+    private final ResourceBundle bundle;
+    private final Command errorCommand;
+    public Exit(ResourceBundle bundle, Command errorCommand) {
+        this.bundle = bundle;
+        this.errorCommand = errorCommand;
+    }
     @Override
     public String execute(String request) {
-
-        System.out.println("Bye!");
-        Runnable close = Server::close;
-
-        return ResponseType.EXIT.name();
+        if (!request.equalsIgnoreCase(EXIT.name())) {
+            return errorCommand.execute(request);
+        }
+        Server.close();
+        return bundle.getString(EXIT.name());
     }
 }

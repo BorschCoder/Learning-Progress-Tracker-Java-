@@ -12,5 +12,7 @@ public enum CommandType {
         this.type = type;
     }
 
-//
+    public String get() {
+        return type;
+    }
 }

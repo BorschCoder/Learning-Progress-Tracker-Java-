@@ -1,13 +1,12 @@
 package com.company.tracker.controller.command;
 
-import com.company.tracker.controller.command.impl.AddStudent;
-import com.company.tracker.controller.command.impl.Exit;
-import com.company.tracker.controller.command.impl.Help;
-import com.company.tracker.controller.command.impl.Undefined;
+import com.company.tracker.controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import static com.company.tracker.controller.command.CommandType.*;
 
 public final class CommandProvider {
 
@@ -17,23 +16,29 @@ public final class CommandProvider {
 
     public CommandProvider() {
         this.bundle = ResourceBundle.getBundle(RESPONSE_BUNDLE);
-        repository.put(CommandType.ADD, new AddStudent(bundle));
-        repository.put(CommandType.EXIT, new Exit());
-        repository.put(CommandType.HELP, new Help());
-        repository.put(CommandType.BACK, new Help());
-        repository.put(CommandType.UNDEFINED, new Undefined());
+        repository.put(ADD, new AddStudent(bundle));
+        repository.put(HELP, new Help(bundle));
+        repository.put(BACK, new Back(bundle));
+        repository.put(UNDEFINED, new Undefined(bundle));
+        repository.put(EXIT, new Exit(bundle, repository.get(UNDEFINED)));
 
     }
 
     public Command getCommand(String nameCommand) {
+
         CommandType commandType = null;
         Command commandInstance = null;
+        String ejectCommand = ejectCommand(nameCommand);
         try {
-            commandType = CommandType.valueOf(nameCommand.toUpperCase());
+            commandType = CommandType.valueOf(ejectCommand);
             commandInstance = repository.get(commandType);
         } catch (IllegalArgumentException | NullPointerException e) {
-            commandInstance = repository.get(CommandType.UNDEFINED);
+            commandInstance = repository.get(UNDEFINED);
         }
         return commandInstance;
+    }
+
+    private String ejectCommand(String nameCommand) {
+        return nameCommand.split(" ")[0].toUpperCase();
     }
 }

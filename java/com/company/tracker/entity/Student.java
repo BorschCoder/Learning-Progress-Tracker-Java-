@@ -14,4 +14,7 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
     }
+    public Student(String firstName, String lastName, String email) {
+        this(firstName, "",lastName,email);
+    }
 }

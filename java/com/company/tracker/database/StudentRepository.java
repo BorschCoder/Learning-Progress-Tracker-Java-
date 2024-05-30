@@ -8,26 +8,22 @@ import java.util.List;
 
 public class StudentRepository {
 
-    // TODO: 26.05.2024 just a collection that get from DAO 
+    private static StudentRepository instance;
 
+    private  StudentRepository() {
+        students = new ArrayList<>();
+    }
+    public static StudentRepository getInstance(){
+        if (instance == null){
+            instance = new StudentRepository();
+        }
+        return instance;
+    }
 
     private List<Student> students;
-
-    public StudentRepository() {
-
+    public boolean add(Student student) {
+        boolean added = students.add(student);
+        return added;
     }
-
-    public ResponseType addStudent(String studentsData) {
-
-        return ResponseType.ADDED;
-    }
-}
-    /*public List<Student> findUsersByName(String name) {
-//        List<Student> finded = new ArrayList<>();
-//
-//        for (Student item: students) {
-//
-//        }
-   //
 
 }
