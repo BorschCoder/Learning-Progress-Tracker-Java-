@@ -1,13 +1,16 @@
 package com.company.tracker.service.impl;
 
-import com.company.tracker.StudentParser;
+import com.company.tracker.database.repository.StudentRepository;
+import com.company.tracker.factory.RepositoryFactory;
+import com.company.tracker.util.StudentParser;
 import com.company.tracker.controller.ResponseType;
-import com.company.tracker.database.StudentRepository;
+import com.company.tracker.database.repository.impl.StudentRepositoryImpl;
 import com.company.tracker.entity.Student;
 import com.company.tracker.entity.StudentCredential;
 import com.company.tracker.factory.StudentFactory;
 import com.company.tracker.service.StudentService;
 import com.company.tracker.validators.StudentValidator;
+import com.company.tracker.validators.UniqueCheck;
 
 import java.util.Map;
 
@@ -16,9 +19,9 @@ import static com.company.tracker.entity.StudentCredential.*;
 
 public class StudentServiceImpl implements StudentService {
     private static StudentServiceImpl instance;
-    private StudentServiceImpl( ) {
+    private StudentServiceImpl() {
         this.studentFactory = StudentFactory.getInstance();
-        this.studentRepository = StudentRepository.getInstance();
+        this.studentRepository = RepositoryFactory.createStudentRepository();
     }
     public static StudentServiceImpl getInstance(){
         if (instance == null){
@@ -48,11 +51,21 @@ public class StudentServiceImpl implements StudentService {
         if (responseType != ResponseType.ADDED) {
             return responseType;
         }
+        if (!UniqueCheck.isUniqueEmail(studentInfo.get(EMAIL))){
+            return ResponseType.EMAIL_ALREADY_TAKEN;
+        }
         Student student = studentFactory.createStudent(studentInfo);
         studentRepository.add(student);
         countStudent = countStudent +1;
         return responseType;
     }
+
+    @Override
+    public ResponseType add_points(String request) {
+        return null;
+    }
+
+
     private ResponseType isStudentValid(Map<StudentCredential, String> studentInfo) {
 
         if (studentInfo.containsKey(FIRST_NAME) && !StudentValidator.isValidName(studentInfo.get(FIRST_NAME))) {

@@ -1,4 +1,4 @@
-package com.company.tracker;
+package com.company.tracker.util;
 
 import com.company.tracker.entity.StudentCredential;
 

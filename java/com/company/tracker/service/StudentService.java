@@ -6,4 +6,7 @@ public interface StudentService {
 
 
     ResponseType add(String request);
+    ResponseType add_points(String request);
+
+
 }

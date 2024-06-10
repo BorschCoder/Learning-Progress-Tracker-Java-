@@ -17,9 +17,11 @@ public final class CommandProvider {
     public CommandProvider() {
         this.bundle = ResourceBundle.getBundle(RESPONSE_BUNDLE);
         repository.put(ADD, new AddStudent(bundle));
+        repository.put(ADD_POITNS, new AddPoints(bundle));
         repository.put(HELP, new Help(bundle));
         repository.put(BACK, new Back(bundle));
         repository.put(UNDEFINED, new Undefined(bundle));
+        repository.put(LIST, new List(bundle));
         repository.put(EXIT, new Exit(bundle, repository.get(UNDEFINED)));
 
     }
