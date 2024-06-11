@@ -3,12 +3,10 @@ package com.company.tracker.controller;
 import com.company.tracker.controller.command.Command;
 import com.company.tracker.controller.command.CommandProvider;
 import com.company.tracker.controller.command.Input;
-import com.company.tracker.controller.command.impl.AddStudent;
-import com.company.tracker.controller.command.impl.Back;
-import com.company.tracker.controller.command.impl.Exit;
-import com.company.tracker.controller.command.impl.Undefined;
+import com.company.tracker.controller.command.impl.BackCommand;
+import com.company.tracker.controller.command.impl.ExitCommand;
+import com.company.tracker.controller.command.impl.UndefinedCommand;
 
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Server {
@@ -45,14 +43,14 @@ public class Server {
         CommandProvider commandProvider = new CommandProvider();
         Command command = commandProvider.getCommand(input);
 
-        if (command instanceof Undefined || command instanceof Exit) {
+        if (command instanceof UndefinedCommand || command instanceof ExitCommand) {
             if (lastCommand instanceof Input && isInput) {
                 return lastCommand.execute(input);
             }
             return command.execute(input);
         }
-        if (!(command instanceof Exit) && !isInput) {
-            if (command instanceof Back & !(lastCommand instanceof Back)) {
+        if (!(command instanceof ExitCommand) && !isInput) {
+            if (command instanceof BackCommand & !(lastCommand instanceof BackCommand)) {
                 return "Enter 'exit' to exit the program.";
             }
         }

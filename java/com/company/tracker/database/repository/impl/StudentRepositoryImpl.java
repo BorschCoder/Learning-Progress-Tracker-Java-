@@ -6,6 +6,7 @@ import com.company.tracker.entity.Student;
 import com.company.tracker.factory.DAOFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StudentRepositoryImpl implements StudentRepository {
 
@@ -36,14 +37,14 @@ public class StudentRepositoryImpl implements StudentRepository {
         return students;
     }
 
-    public Student getStudentById(int id) {
+    public Optional<Student> getStudentById(int id) {
         List<Student> listOfStudents = getStudentsList();
         for (Student student : listOfStudents) {
             if (student.getId() == id) {
-                return student;
+                return Optional.of(student);
             }
         }
-        return null;
+        return Optional.of(new Student());
     }
 
 

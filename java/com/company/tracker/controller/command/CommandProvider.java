@@ -16,15 +16,17 @@ public final class CommandProvider {
 
     public CommandProvider() {
         this.bundle = ResourceBundle.getBundle(RESPONSE_BUNDLE);
-        repository.put(ADD, new AddStudent(bundle));
-        repository.put(ADD_POITNS, new AddPoints(bundle));
-        repository.put(HELP, new Help(bundle));
-        repository.put(BACK, new Back(bundle));
-        repository.put(UNDEFINED, new Undefined(bundle));
-        repository.put(LIST, new List(bundle));
-        repository.put(EXIT, new Exit(bundle, repository.get(UNDEFINED)));
+        repository.put(ADD, new AddStudentCommand(bundle));
+        repository.put(ADD_POINTS, new AddPointsCommand(bundle));
+        repository.put(HELP, new HelpCommand(bundle));
+        repository.put(BACK, new BackCommand(bundle));
+        repository.put(UNDEFINED, new UndefinedCommand(bundle));
+        repository.put(LIST, new ListCommand(bundle));
+        repository.put(EXIT, new ExitCommand(bundle, repository.get(UNDEFINED)));
 
     }
+
+    // TODO: 11.06.2024 preprocessing - if has SPACE ' ' char -> replace with UNDERSCORE '_' before calling 'valueOf' 
 
     public Command getCommand(String nameCommand) {
 

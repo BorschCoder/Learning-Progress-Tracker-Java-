@@ -1,11 +1,16 @@
 package com.company.tracker.validators;
 
+import com.company.tracker.controller.ResponseType;
 import com.company.tracker.entity.StudentCredential;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.company.tracker.controller.ResponseType.*;
+import static com.company.tracker.entity.StudentCredential.*;
+import static com.company.tracker.entity.StudentCredential.EMAIL;
 
 public class StudentValidator {
     public static final Pattern NAME_REGEX = Pattern.compile("[a-zA-Z]+([ '\\-]*[a-zA-Z]*)*");
@@ -28,6 +33,24 @@ public class StudentValidator {
         Matcher matcher = EMAIL_REGEX.matcher(email);
 
         return matcher.matches();
+    }
+
+    public static ResponseType isStudentValid(Map<StudentCredential, String> studentInfo) {
+
+        if (studentInfo.containsKey(FIRST_NAME) && !StudentValidator.isValidName(studentInfo.get(FIRST_NAME))) {
+            return INCORRECT_FIRST_NAME;
+        }
+        if (studentInfo.containsKey(SECOND_NAME) && !StudentValidator.isValidName(studentInfo.get(SECOND_NAME))) {
+            return INCORRECT_SECOND_NAME;
+        }
+        if (studentInfo.containsKey(LAST_NAME) && !StudentValidator.isValidName(studentInfo.get(LAST_NAME))) {
+            return INCORRECT_LAST_NAME;
+        }
+        if (studentInfo.containsKey(EMAIL) && !StudentValidator.isValidEmail(studentInfo.get(EMAIL))) {
+            return INCORRECT_EMAIL;
+        }
+        return ADDED;
+
     }
 
 }

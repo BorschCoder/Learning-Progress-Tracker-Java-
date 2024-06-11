@@ -1,12 +1,16 @@
 package com.company.tracker.service;
 
 import com.company.tracker.controller.ResponseType;
+import com.company.tracker.entity.Response;
 
 public interface StudentService {
 
 
-    ResponseType add(String request);
-    ResponseType add_points(String request);
+    Response add(String request);
+
+    Response addPoints(String request);
+
+    Response getStudentById(int id);
 
 
 }

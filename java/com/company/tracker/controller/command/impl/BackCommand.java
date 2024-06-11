@@ -7,9 +7,9 @@ import com.company.tracker.service.impl.StudentServiceImpl;
 
 import java.util.ResourceBundle;
 
-public class Back implements Command {
+public class BackCommand implements Command {
     private final ResourceBundle bundle;
-    public Back(ResourceBundle bundle) {
+    public BackCommand(ResourceBundle bundle) {
         this.bundle = bundle;
     }
     @Override

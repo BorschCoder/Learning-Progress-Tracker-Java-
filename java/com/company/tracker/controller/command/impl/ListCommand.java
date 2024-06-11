@@ -4,12 +4,15 @@ import com.company.tracker.controller.command.Command;
 import com.company.tracker.database.repository.impl.StudentRepositoryImpl;
 import com.company.tracker.entity.Student;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class List implements Command {
+public class ListCommand implements Command {
+
+    private static final String ITEM_STRING_PATTERN = "%d\n";
     private final ResourceBundle bundle;
 
-    public List(ResourceBundle bundle) {
+    public ListCommand(ResourceBundle bundle) {
         this.bundle = bundle;
     }
 
@@ -17,13 +20,13 @@ public class List implements Command {
     public String execute(String request) {
 
         StudentRepositoryImpl studentRepository = StudentRepositoryImpl.getInstance();
-        java.util.List<Student> listOfStudents = studentRepository.getStudentsList();
+        List<Student> listCommandOfStudents = studentRepository.getStudentsList();
 
         StringBuilder responseString = new StringBuilder();
         responseString.append("Students:\n");
 
-        for (Student student : listOfStudents) {
-            responseString.append(student.getId() + "\n");
+        for (Student student : listCommandOfStudents) {
+            responseString.append(String.format(ITEM_STRING_PATTERN, student.getId()));
         }
         return responseString.toString();
     }

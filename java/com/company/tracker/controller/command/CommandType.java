@@ -6,7 +6,8 @@ public enum CommandType {
     LIST("list"),
     BACK("back"),
     ADD("add students"),
-    ADD_POITNS("add points"),
+    FIND("find"),
+    ADD_POINTS("add points"),
     UNDEFINED("");
     private final String type;
 

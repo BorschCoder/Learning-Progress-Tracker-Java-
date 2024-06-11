@@ -10,12 +10,12 @@ import java.util.ResourceBundle;
 import static com.company.tracker.controller.ResponseType.Credentials_STUDENTS;
 import static com.company.tracker.controller.command.CommandType.ADD;
 
-public class AddStudent implements Command, Input {
+public class AddStudentCommand implements Command, Input {
 
     private final ResourceBundle bundle;
     private final StudentServiceImpl service;
 
-    public AddStudent(ResourceBundle bundle) {
+    public AddStudentCommand(ResourceBundle bundle) {
         this.bundle = bundle;
         this.service = StudentServiceImpl.getInstance();
     }
@@ -26,7 +26,7 @@ public class AddStudent implements Command, Input {
             Server.enableInputMode();
             return bundle.getString(Credentials_STUDENTS.name());
         }
-        return bundle.getString(service.add(request).name());
+        return bundle.getString(service.add(request).getType().name());
     }
 
 
