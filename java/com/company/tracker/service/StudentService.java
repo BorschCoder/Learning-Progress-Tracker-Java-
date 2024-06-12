@@ -2,6 +2,7 @@ package com.company.tracker.service;
 
 import com.company.tracker.controller.ResponseType;
 import com.company.tracker.entity.Response;
+import com.company.tracker.entity.Student;
 
 public interface StudentService {
 

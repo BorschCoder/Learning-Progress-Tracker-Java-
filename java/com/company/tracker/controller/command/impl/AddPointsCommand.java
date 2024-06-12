@@ -1,8 +1,8 @@
 package com.company.tracker.controller.command.impl;
 
-import com.company.tracker.controller.ResponseType;
 import com.company.tracker.controller.Server;
 import com.company.tracker.controller.command.Command;
+import com.company.tracker.controller.command.Input;
 import com.company.tracker.entity.Response;
 import com.company.tracker.service.impl.StudentServiceImpl;
 
@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 import static com.company.tracker.controller.command.CommandType.ADD_POINTS;
 
-public class AddPointsCommand implements Command {
+public class AddPointsCommand implements Command, Input {
     private final ResourceBundle bundle;
     private final StudentServiceImpl service;
 
@@ -27,7 +27,7 @@ public class AddPointsCommand implements Command {
             return bundle.getString(ADD_POINTS.name());
         }
         Response response = service.addPoints(request);
-//        String responseString = String.format(bundle.getString(service.addPoints(request).getType().name()));
-        return bundle.getString(ResponseType.POINTS_UPDATED.name());
+
+        return String.format(bundle.getString(response.getType().name()), response.getStudentStringId());
     }
 }

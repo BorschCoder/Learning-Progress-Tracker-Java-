@@ -5,7 +5,7 @@ public enum CommandType {
     HELP("help"),
     LIST("list"),
     BACK("back"),
-    ADD("add students"),
+    ADD_STUDENTS("add students"),
     FIND("find"),
     ADD_POINTS("add points"),
     UNDEFINED("");

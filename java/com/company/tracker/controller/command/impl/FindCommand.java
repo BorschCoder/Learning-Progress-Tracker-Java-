@@ -2,14 +2,12 @@ package com.company.tracker.controller.command.impl;
 
 import com.company.tracker.controller.Server;
 import com.company.tracker.controller.command.Command;
-import com.company.tracker.entity.Course;
+import com.company.tracker.controller.command.Input;
 import com.company.tracker.entity.Response;
-import com.company.tracker.entity.Student;
 import com.company.tracker.service.StudentService;
 import com.company.tracker.service.impl.StudentServiceImpl;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static com.company.tracker.controller.ResponseType.NO_STUDENTS_BY_ID;
@@ -17,7 +15,7 @@ import static com.company.tracker.controller.ResponseType.SHOW_STATS;
 import static com.company.tracker.controller.command.CommandType.FIND;
 import static com.company.tracker.entity.Course.*;
 
-public class FindCommand implements Command {
+public class FindCommand implements Command, Input {
     private final ResourceBundle bundle;
     private final StudentService service;
 

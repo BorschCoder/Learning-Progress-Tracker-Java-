@@ -16,10 +16,11 @@ public final class CommandProvider {
 
     public CommandProvider() {
         this.bundle = ResourceBundle.getBundle(RESPONSE_BUNDLE);
-        repository.put(ADD, new AddStudentCommand(bundle));
+        repository.put(ADD_STUDENTS, new AddStudentCommand(bundle));
         repository.put(ADD_POINTS, new AddPointsCommand(bundle));
         repository.put(HELP, new HelpCommand(bundle));
         repository.put(BACK, new BackCommand(bundle));
+        repository.put(FIND, new FindCommand(bundle));
         repository.put(UNDEFINED, new UndefinedCommand(bundle));
         repository.put(LIST, new ListCommand(bundle));
         repository.put(EXIT, new ExitCommand(bundle, repository.get(UNDEFINED)));
@@ -33,6 +34,9 @@ public final class CommandProvider {
         CommandType commandType = null;
         Command commandInstance = null;
         String ejectCommand = ejectCommand(nameCommand);
+        if (ejectCommand.equals("ADD") && argumentsSize(nameCommand) == 2) {
+            ejectCommand = nameCommand.replace(" ", "_").toUpperCase();
+        }
         try {
             commandType = CommandType.valueOf(ejectCommand);
             commandInstance = repository.get(commandType);
@@ -44,5 +48,9 @@ public final class CommandProvider {
 
     private String ejectCommand(String nameCommand) {
         return nameCommand.split(" ")[0].toUpperCase();
+    }
+
+    private int argumentsSize(String command) {
+        return command.split(" ").length;
     }
 }

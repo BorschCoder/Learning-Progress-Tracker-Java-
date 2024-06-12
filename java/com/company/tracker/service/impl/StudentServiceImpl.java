@@ -1,17 +1,14 @@
 package com.company.tracker.service.impl;
 
 import com.company.tracker.database.repository.StudentRepository;
-import com.company.tracker.entity.Course;
-import com.company.tracker.entity.Response;
+import com.company.tracker.entity.*;
 import com.company.tracker.factory.RepositoryFactory;
 import com.company.tracker.util.PointsParser;
 import com.company.tracker.util.StudentParser;
 import com.company.tracker.controller.ResponseType;
-import com.company.tracker.database.repository.impl.StudentRepositoryImpl;
-import com.company.tracker.entity.Student;
-import com.company.tracker.entity.StudentCredential;
 import com.company.tracker.factory.StudentFactory;
 import com.company.tracker.service.StudentService;
+import com.company.tracker.validators.PointsValidator;
 import com.company.tracker.validators.StudentValidator;
 import com.company.tracker.validators.UniqueCheck;
 
@@ -22,6 +19,8 @@ import static com.company.tracker.entity.StudentCredential.*;
 
 
 public class StudentServiceImpl implements StudentService {
+
+
     private static StudentServiceImpl instance;
 
     private StudentServiceImpl() {
@@ -37,12 +36,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private static int countStudent = 0;
-    private StudentFactory studentFactory;
-    private StudentRepository studentRepository;
+    private final StudentFactory studentFactory;
+    private final StudentRepository studentRepository;
 
     public Response getStudentById(int id) {
-        Student find = studentRepository.getStudentById(id).get();
-        return new Response(ResponseType.SHOW_STATS, find.getId(), find.getStatistics().getStat());
+        Student foundStudent = studentRepository.getStudentById(id).get();
+        if (foundStudent.equals(studentRepository.getEmptyStudent())) {
+            return new Response(NO_STUDENTS_BY_ID);
+        }
+        return new Response(ResponseType.SHOW_STATS, foundStudent.getId(), foundStudent.getStatistics().getStat());
     }
 
     public static int getCountStudent() {
@@ -74,12 +76,25 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Response addPoints(String request) {
         String[] requestArray = request.split(" ");
-        Map<Course, Integer> courseInfo = PointsParser.parsePointsRequest(requestArray);
 
-        if (courseInfo.isEmpty()) {
-            return new Response(INCORRECT);
+        Response response = getStudentById(PointsParser.parseStringWithExc(requestArray[0]));
+
+        if (response.getType().equals(NO_STUDENTS_BY_ID)) {
+            response.setStudentStringId(requestArray[0]);
+            return response;
         }
-        return null;
+
+        Map<Course, Integer> courseInfo = PointsParser.parsePointsRequest(requestArray);
+        if (courseInfo.isEmpty() | !PointsValidator.isCorrectPointFormat(courseInfo)) {
+            return new Response(INCORRECT_POINTS_FORMAT);
+        }
+
+        studentRepository.updateStatById(
+                response.getStudentId(),
+                new Statistics(response.getStudentId(), courseInfo)
+        );
+
+        return new Response(POINTS_UPDATED);
     }
 
 

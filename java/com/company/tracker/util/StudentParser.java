@@ -1,5 +1,6 @@
 package com.company.tracker.util;
 
+import com.company.tracker.entity.Student;
 import com.company.tracker.entity.StudentCredential;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import static com.company.tracker.entity.StudentCredential.*;
 public class StudentParser {
     public static final int LENGTH_WITH_SECOND_NAME = 4;
     public static final int LENGTH_WITHOUT_SECOND_NAME = 3;
+
 
     public static Map<StudentCredential, String> parseStudentInfo(String request) {
 

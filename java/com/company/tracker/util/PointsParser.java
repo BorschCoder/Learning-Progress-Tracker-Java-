@@ -1,14 +1,9 @@
 package com.company.tracker.util;
 
 import com.company.tracker.entity.Course;
-import com.company.tracker.entity.Statistics;
-import com.company.tracker.entity.StudentCredential;
-import com.company.tracker.entity.StudentCredential.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.company.tracker.entity.Course.*;
 
 public class PointsParser {
     public static Map<Course, Integer> parsePointsRequest(String[] requestArray) {
@@ -18,11 +13,19 @@ public class PointsParser {
             return stat;
         }
 
-        stat.put(Course.JAVA, Integer.valueOf(requestArray[1]));
-        stat.put(Course.DSA, Integer.valueOf(requestArray[2]));
-        stat.put(Course.DATABASES, Integer.valueOf(requestArray[3]));
-        stat.put(Course.SPRING, Integer.valueOf(requestArray[4]));
+        stat.put(Course.JAVA, parseStringWithExc(requestArray[1]));
+        stat.put(Course.DSA, parseStringWithExc(requestArray[2]));
+        stat.put(Course.DATABASES, parseStringWithExc(requestArray[3]));
+        stat.put(Course.SPRING, parseStringWithExc(requestArray[4]));
 
         return stat;
+    }
+
+    public static Integer parseStringWithExc(String string) {
+        try {
+            return Integer.valueOf(string);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 }

@@ -7,6 +7,8 @@ import com.company.tracker.entity.Student;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.company.tracker.controller.ResponseType.NO_STUDENTS_FOUND;
+
 public class ListCommand implements Command {
 
     private static final String ITEM_STRING_PATTERN = "%d\n";
@@ -21,7 +23,9 @@ public class ListCommand implements Command {
 
         StudentRepositoryImpl studentRepository = StudentRepositoryImpl.getInstance();
         List<Student> listCommandOfStudents = studentRepository.getStudentsList();
-
+        if (listCommandOfStudents.isEmpty()){
+            return  bundle.getString(NO_STUDENTS_FOUND.name());
+        }
         StringBuilder responseString = new StringBuilder();
         responseString.append("Students:\n");
 
