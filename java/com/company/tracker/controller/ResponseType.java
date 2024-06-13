@@ -8,6 +8,7 @@ public enum ResponseType {
     HELP,
     INCORRECT,
     UNDEFINED,
+    GENERAL_STAT,
     INCORRECT_FIRST_NAME,
     INCORRECT_SECOND_NAME,
     INCORRECT_LAST_NAME,

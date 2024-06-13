@@ -8,6 +8,7 @@ public enum CommandType {
     ADD_STUDENTS("add students"),
     FIND("find"),
     ADD_POINTS("add points"),
+    STATISTICS("statistics"),
     UNDEFINED("");
     private final String type;
 

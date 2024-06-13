@@ -3,6 +3,7 @@ package com.company.tracker.database.repository;
 import com.company.tracker.entity.Statistics;
 import com.company.tracker.entity.Student;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository {
@@ -15,4 +16,5 @@ public interface StudentRepository {
     Optional<Student> getStudentById(int id);
 
     void updateStatById(int id, Statistics newStat);
+    List<Statistics> getStatisticsAllStudents();
 }

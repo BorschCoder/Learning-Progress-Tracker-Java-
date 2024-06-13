@@ -21,13 +21,12 @@ public final class CommandProvider {
         repository.put(HELP, new HelpCommand(bundle));
         repository.put(BACK, new BackCommand(bundle));
         repository.put(FIND, new FindCommand(bundle));
+        repository.put(STATISTICS, new StatisticsCommand(bundle));
         repository.put(UNDEFINED, new UndefinedCommand(bundle));
         repository.put(LIST, new ListCommand(bundle));
         repository.put(EXIT, new ExitCommand(bundle, repository.get(UNDEFINED)));
 
     }
-
-    // TODO: 11.06.2024 preprocessing - if has SPACE ' ' char -> replace with UNDERSCORE '_' before calling 'valueOf' 
 
     public Command getCommand(String nameCommand) {
 
