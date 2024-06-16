@@ -6,7 +6,7 @@ import com.company.tracker.entity.Response;
 public interface StatisticsService {
     public String getStatistics();
     public String getCourseStats(String request, Course course);
-    public Response getGeneralStatistic();
+    public Response getCategoryStatistic();
     public void updateGeneralStatistic();
 
 }

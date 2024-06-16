@@ -6,20 +6,19 @@ import com.company.tracker.database.repository.impl.StudentRepositoryImpl;
 import com.company.tracker.entity.Course;
 import com.company.tracker.entity.Response;
 import com.company.tracker.entity.Statistics;
-import com.company.tracker.factory.RepositoryFactory;
-import com.company.tracker.factory.StudentFactory;
 import com.company.tracker.service.StatisticsService;
-import com.company.tracker.service.StudentService;
 
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class StatisticsServiceImpl implements StatisticsService {
     private static StatisticsServiceImpl instance;
-    private static StudentRepository studentRepository;
+
+    private final StudentRepository studentRepository;
     public static final String RESPONSE_BUNDLE = "response";
     private final ResourceBundle bundle;
     private List<Statistics> statisticsList;
+    private List<Map.Entry<Course, Integer>> courseList;
+
 
     private StatisticsServiceImpl() {
         this.bundle = ResourceBundle.getBundle(RESPONSE_BUNDLE);
@@ -49,38 +48,58 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public Response getGeneralStatistic() {
+    public Response getCategoryStatistic() {
+        fillLeastMostPopCoursesMap();
+
         String responseString = String.format(bundle.getString(ResponseType.GENERAL_STAT.name())
-                , getMostPopGourse()
-                , getLeastPopGourse()
-                , getHighestActivityGourse()
-                , getLowestActivityGourse()
-                , getEasiestGourse()
-                , getHardestGourse());
+                , getMostPopCourse()
+                , getLeastPopСourse()
+                , getHighestActivityСourse()
+                , getLowestActivityСourse()
+                , getEasiestCourse()
+                , getHardestCourse());
         return null;
     }
 
-    private Course getEasiestGourse() {
+    private Course getEasiestCourse() {
         return null;
     }
 
-    private Course getHardestGourse() {
+    private Course getHardestCourse() {
         return null;
     }
 
-    private Course getMostPopGourse() {
+    private Course getMostPopCourse() {
+        return courseList.get(0).getKey();
+    }
+
+    private void fillLeastMostPopCoursesMap() {
+        Map<Course, Integer> leastMostPopCourses = new TreeMap<Course, Integer>(Comparator.reverseOrder());
+        for (Statistics statistics : this.statisticsList) {
+            List<Course> activeCourse = statistics.getActiveCourse();
+
+            for (Course course : activeCourse) {
+                if (leastMostPopCourses.containsKey(course)) {
+                    leastMostPopCourses.put(course, leastMostPopCourses.get(course) + 1);
+                } else {
+                    leastMostPopCourses.put(course, 1);
+                }
+            }
+        }
+        courseList = new ArrayList<>(leastMostPopCourses.entrySet());
+        courseList.sort(Map.Entry.comparingByValue());
+
+    }
+
+    private Course getLeastPopСourse() {
+        return courseList.get(courseList.size() - 1).getKey();
+    }
+
+    private Course getHighestActivityСourse() {
         return null;
     }
 
-    private Course getLeastPopGourse() {
-        return null;
-    }
-
-    private Course getHighestActivityGourse() {
-        return null;
-    }
-
-    private Course getLowestActivityGourse() {
+    private Course getLowestActivityСourse() {
         return null;
     }
 

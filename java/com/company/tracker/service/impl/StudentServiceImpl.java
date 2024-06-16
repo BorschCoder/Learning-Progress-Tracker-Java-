@@ -3,6 +3,7 @@ package com.company.tracker.service.impl;
 import com.company.tracker.database.repository.StudentRepository;
 import com.company.tracker.entity.*;
 import com.company.tracker.factory.RepositoryFactory;
+import com.company.tracker.factory.SinglRowStatisticFactory;
 import com.company.tracker.util.PointsParser;
 import com.company.tracker.util.StudentParser;
 import com.company.tracker.controller.ResponseType;
@@ -26,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentServiceImpl() {
         this.studentFactory = StudentFactory.getInstance();
         this.studentRepository = RepositoryFactory.createStudentRepository();
+        this.singlRowStatisticFactory = SinglRowStatisticFactory.getInstance();
     }
 
     public static StudentServiceImpl getInstance() {
@@ -38,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
     private static int countStudent = 0;
     private final StudentFactory studentFactory;
     private final StudentRepository studentRepository;
+    private final SinglRowStatisticFactory singlRowStatisticFactory;
 
     public Response getStudentById(int id) {
         Student foundStudent = studentRepository.getStudentById(id).get();
@@ -95,6 +98,12 @@ public class StudentServiceImpl implements StudentService {
         );
 
         return new Response(POINTS_UPDATED);
+    }
+
+    private void recordSinglRowStatistic(Map<Course, Integer> courseInfo, int studentId) {
+        for (Map.Entry<Course, Integer> entry : courseInfo.entrySet()) {
+            singlRowStatisticFactory.greateSinglRowStatistic(entry.getKey(), entry.getValue(), studentId);
+        }
     }
 
 

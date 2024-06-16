@@ -6,7 +6,6 @@ import com.company.tracker.controller.command.Input;
 import com.company.tracker.entity.Response;
 import com.company.tracker.service.StatisticsService;
 import com.company.tracker.service.impl.StatisticsServiceImpl;
-import com.company.tracker.service.impl.StudentServiceImpl;
 
 import java.util.ResourceBundle;
 
@@ -29,8 +28,8 @@ public class StatisticsCommand implements Command, Input {
             return bundle.getString(STATISTICS.name());
         }
         service.updateGeneralStatistic();
-        Response response = service.addPoints(request);
-
-        return String.format(bundle.getString(response.getType().name()), response.getStudentStringId());
+       Response response = service.getCategoryStatistic();
+        return null;
+//        return String.format(bundle.getString(response.getType().name()), response.getStudentStringId());
     }
 }

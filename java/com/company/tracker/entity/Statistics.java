@@ -1,10 +1,12 @@
 package com.company.tracker.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Statistics {
+
+    public int getStudentId() {
+        return studentId;
+    }
 
     private int studentId;
     private Map<Course, Integer> stat;
@@ -52,5 +54,15 @@ public class Statistics {
 
     public Integer get(Course course) {
         return stat.get(course);
+    }
+
+    public List<Course> getActiveCourse() {
+        List<Course> courses = new ArrayList<>();
+        for (Map.Entry<Course, Integer> entry : stat.entrySet()) {
+            if (entry.getValue() > 0) {
+                courses.add(entry.getKey());
+            }
+        }
+        return courses;
     }
 }
