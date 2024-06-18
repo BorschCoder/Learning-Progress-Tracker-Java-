@@ -11,6 +11,7 @@ public class Response {
     private int studentId;
     private String studentStringId;
 
+
     public String getStatisticsString() {
         return statisticsString;
     }
@@ -26,8 +27,9 @@ public class Response {
         this.studentStringId = studentStringId;
     }
 
-
-
+    public Response(String statisticsString) {
+        this.statisticsString = statisticsString;
+    }
 
     public Response(ResponseType type, int studentId, Map<Course, Integer> statDTO) {
         this.type = type;

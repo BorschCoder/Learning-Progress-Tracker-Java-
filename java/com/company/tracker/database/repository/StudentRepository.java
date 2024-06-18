@@ -1,5 +1,7 @@
 package com.company.tracker.database.repository;
 
+import com.company.tracker.database.repository.impl.GeneralStatisticRepositoryImpl;
+import com.company.tracker.database.repository.impl.StudentRepositoryImpl;
 import com.company.tracker.entity.Statistics;
 import com.company.tracker.entity.Student;
 
@@ -17,4 +19,8 @@ public interface StudentRepository {
 
     void updateStatById(int id, Statistics newStat);
     List<Statistics> getStatisticsAllStudents();
+    List<Student>findAll();
+    static StudentRepository getInstance() {
+        return StudentRepositoryImpl.getInstance();
+    }
 }

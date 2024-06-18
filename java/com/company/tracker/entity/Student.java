@@ -2,6 +2,8 @@ package com.company.tracker.entity;
 
 import com.company.tracker.util.IDGenerator;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Student {
@@ -45,12 +47,13 @@ public class Student {
         this.statistics = new Statistics(id);
         this.id = IDGenerator.getCurrentID();
     }
+
     public Student(String firstName, String lastName, String email) {
-        this(firstName, "",lastName,email);
+        this(firstName, "", lastName, email);
     }
 
 
-   @Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -88,4 +91,6 @@ public class Student {
         sb.append('}');
         return sb.toString();
     }
+
+
 }

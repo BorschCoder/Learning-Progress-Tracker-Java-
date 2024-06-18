@@ -18,6 +18,9 @@ public enum ResponseType {
     EMAIL_ALREADY_TAKEN,
     SHOW_STATS,
     NO_STUDENTS_FOUND,
-    INCORRECT_POINTS_FORMAT;
+    UnknownCourse,
+    INCORRECT_POINTS_FORMAT,
+    TABLE_HEADER,
+    TABLE_CONTENT;
 
 }

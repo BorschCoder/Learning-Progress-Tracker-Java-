@@ -7,10 +7,7 @@ import com.company.tracker.entity.Statistics;
 import com.company.tracker.entity.Student;
 import com.company.tracker.factory.DAOFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class StudentRepositoryImpl implements StudentRepository {
 
@@ -58,6 +55,11 @@ public class StudentRepositoryImpl implements StudentRepository {
         return statisticsList;
     }
 
+    @Override
+    public List<Student> findAll() {
+        return students;
+    }
+
     public Optional<Student> getStudentById(int id) {
         List<Student> listOfStudents = getStudentsList();
         for (Student student : listOfStudents) {
@@ -84,6 +86,8 @@ public class StudentRepositoryImpl implements StudentRepository {
             );
         }
     }
+
+
 
 
 }

@@ -4,6 +4,7 @@ import com.company.tracker.controller.Server;
 import com.company.tracker.controller.command.Command;
 import com.company.tracker.controller.command.Input;
 import com.company.tracker.entity.Response;
+import com.company.tracker.service.StudentService;
 import com.company.tracker.service.impl.StudentServiceImpl;
 
 import java.util.Collections;
@@ -13,7 +14,7 @@ import static com.company.tracker.controller.command.CommandType.ADD_POINTS;
 
 public class AddPointsCommand implements Command, Input {
     private final ResourceBundle bundle;
-    private final StudentServiceImpl service;
+    private final StudentService service;
 
     public AddPointsCommand(ResourceBundle bundle) {
         this.bundle = bundle;

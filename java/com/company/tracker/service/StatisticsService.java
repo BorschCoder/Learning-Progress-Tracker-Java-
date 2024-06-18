@@ -4,9 +4,13 @@ import com.company.tracker.entity.Course;
 import com.company.tracker.entity.Response;
 
 public interface StatisticsService {
-    public String getStatistics();
-    public String getCourseStats(String request, Course course);
-    public Response getCategoryStatistic();
-    public void updateGeneralStatistic();
+    String getStatistics();
+
+//    String getCourseStats(String request, Course course);
+
+    Response getCategoryStatistic();
+    Response getDetailsStatisticByCourse(String request);
+    void updateGeneralStatistic();
+
 
 }

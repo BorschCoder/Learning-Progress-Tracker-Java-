@@ -22,14 +22,13 @@ public class StatisticsCommand implements Command, Input {
 
     @Override
     public String execute(String request) {
-
+        service.updateGeneralStatistic();
         if (request.equalsIgnoreCase(STATISTICS.get())) {
             Server.enableInputMode();
-            return bundle.getString(STATISTICS.name());
+            System.out.println(bundle.getString(STATISTICS.name()));
+
+            return service.getCategoryStatistic().getStatisticsString();
         }
-        service.updateGeneralStatistic();
-       Response response = service.getCategoryStatistic();
-        return null;
-//        return String.format(bundle.getString(response.getType().name()), response.getStudentStringId());
+        return service.getDetailsStatisticByCourse(request).getStatisticsString();
     }
 }
