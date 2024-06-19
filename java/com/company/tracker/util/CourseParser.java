@@ -6,8 +6,8 @@ public class CourseParser {
     public static Course parseCourse(String request) {
         try {
             return Course.valueOf(request.trim().toUpperCase());
-        } catch (NullPointerException e) {
-            return null;
+        } catch (IllegalArgumentException exception) {
+            return Course.UNDEFINED;
         }
     }
 }

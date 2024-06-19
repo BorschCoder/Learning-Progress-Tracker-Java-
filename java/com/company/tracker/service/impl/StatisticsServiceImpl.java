@@ -50,12 +50,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     public Response getCategoryStatistic() {
         fillLeastMostPopCoursesMap();
         String responseString = String.format(bundleResponse.getString(ResponseType.GENERAL_STAT.name())
-                , getMostPopCourse()
-                , getLeastPopCourse()
-                , getHighestActivityCourse()
-                , getLowestActivityCourse()
-                , getEasiestCourse()
-                , getHardestCourse());
+                , getMostPopCourses()
+                , bundleCourse.getString(getLeastPopCourse().name())
+                , bundleCourse.getString(getHighestActivityCourse().name())
+                , bundleCourse.getString(getLowestActivityCourse().name())
+                , bundleCourse.getString(getEasiestCourse().name())
+                , bundleCourse.getString(getHardestCourse().name()));
 
         return new Response(responseString);
     }
@@ -63,8 +63,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public Response getDetailsStatisticByCourse(String request) {
         Course course = CourseParser.parseCourse(request);
-        if (course == null) {
-            return new Response(ResponseType.UnknownCourse);
+        if (course == UNDEFINED) {
+            return new Response(bundleResponse.getString(ResponseType.UnknownCourse.name()));
         }
         String tableDetailsStatistic = formDetailsStatistic(course);
         if (tableDetailsStatistic.isEmpty()) {
@@ -78,7 +78,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         Map<Integer, Integer> sortPointsByCourse = getSortedPointsByCourse(course);
 
         if (sortPointsByCourse.isEmpty()) {
-            return new String();
+            return String.format(bundleResponse.getString(ResponseType.TABLE_HEADER.name())
+                    , bundleCourse.getString(course.name()));
         } else {
             StringBuilder tableDetailStatistic = new StringBuilder();
 
@@ -125,11 +126,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private Course getEasiestCourse() {
-
+        if (statisticsList.isEmpty()) {
+            return UNDEFINED;
+        }
         int allAssessmentByJava = generalStatisticRepository.getAverageAssessmentByCourse(JAVA);
         int allAssessmentByDSA = generalStatisticRepository.getAverageAssessmentByCourse(DSA);
         int allAssessmentBySpring = generalStatisticRepository.getAverageAssessmentByCourse(SPRING);
         int allAssessmentByDatabases = generalStatisticRepository.getAverageAssessmentByCourse(DATABASES);
+
 
         int biggerAssessment = Math.max(Math.max(allAssessmentByJava, allAssessmentByDSA)
                 , Math.max(allAssessmentBySpring, allAssessmentByDatabases));
@@ -145,6 +149,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private Course getHardestCourse() {
+
+        if (statisticsList.isEmpty()) {
+            return UNDEFINED;
+        }
+
         int allAssessmentByJava = generalStatisticRepository.getAverageAssessmentByCourse(JAVA);
         int allAssessmentByDSA = generalStatisticRepository.getAverageAssessmentByCourse(DSA);
         int allAssessmentBySpring = generalStatisticRepository.getAverageAssessmentByCourse(SPRING);
@@ -163,38 +172,53 @@ public class StatisticsServiceImpl implements StatisticsService {
             return DATABASES;
     }
 
-    private Course getMostPopCourse() {
-        return courseList.get(0).getKey();
+    private String getMostPopCourses() {
+        if ( courseList.size() == 0){
+            return bundleCourse.getString(UNDEFINED.name());
+        }
+        StringBuilder sequenceMostPopCourses = new StringBuilder();
+        for (int i = 0; i < courseList.size(); i++) {
+            sequenceMostPopCourses.append(i!=0 ?", " +bundleCourse.getString(courseList.get(i).getKey().name()):
+                    bundleCourse.getString(courseList.get(i).getKey().name()));
+        }
+
+        return sequenceMostPopCourses.toString();
     }
 
     private void fillLeastMostPopCoursesMap() {
-        Map<Course, Integer> leastMostPopCourses = new TreeMap<Course, Integer>(Comparator.reverseOrder());
+        Map<Course, Integer> leastMostPopCourses = new TreeMap<Course, Integer>(Comparator.naturalOrder());
+        updateGeneralStatistic();
         for (Statistics statistics : this.statisticsList) {
             List<Course> activeCourse = statistics.getActiveCourse();
-
             for (Course course : activeCourse) {
                 if (leastMostPopCourses.containsKey(course)) {
                     leastMostPopCourses.put(course, leastMostPopCourses.get(course) + 1);
                 } else {
                     leastMostPopCourses.put(course, 1);
                 }
+                System.out.println(course.name() +" "+ leastMostPopCourses.get(course));
             }
         }
+
         courseList = new ArrayList<>(leastMostPopCourses.entrySet());
         courseList.sort(Map.Entry.comparingByValue());
 
     }
 
     private Course getLeastPopCourse() {
-        return courseList.get(courseList.size() - 1).getKey();
+        return courseList.size() != 0 ? courseList.get(courseList.size() - 1).getKey() : UNDEFINED;
     }
 
     private Course getHighestActivityCourse() {
+
+        if (statisticsList.isEmpty()) {
+            return UNDEFINED;
+        }
+
         List<StatisticRecord> ByJava = generalStatisticRepository.getStatisticRecordByCourse(JAVA);
         List<StatisticRecord> ByDSA = generalStatisticRepository.getStatisticRecordByCourse(DSA);
         List<StatisticRecord> BySpring = generalStatisticRepository.getStatisticRecordByCourse(SPRING);
         List<StatisticRecord> ByDatabases = generalStatisticRepository.getStatisticRecordByCourse(DATABASES);
-
 
         int highestActivity = Math.max(Math.max(ByJava.size(), ByDSA.size())
                 , Math.max(BySpring.size(), ByDatabases.size()));
@@ -209,11 +233,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private Course getLowestActivityCourse() {
+        if (statisticsList.isEmpty()) {
+            return UNDEFINED;
+        }
+
         List<StatisticRecord> ByJava = generalStatisticRepository.getStatisticRecordByCourse(JAVA);
         List<StatisticRecord> ByDSA = generalStatisticRepository.getStatisticRecordByCourse(DSA);
         List<StatisticRecord> BySpring = generalStatisticRepository.getStatisticRecordByCourse(SPRING);
         List<StatisticRecord> ByDatabases = generalStatisticRepository.getStatisticRecordByCourse(DATABASES);
-
 
         int lowestActivity = Math.min(Math.min(ByJava.size(), ByDSA.size())
                 , Math.min(BySpring.size(), ByDatabases.size()));

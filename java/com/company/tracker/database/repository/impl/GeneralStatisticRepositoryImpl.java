@@ -4,10 +4,7 @@ import com.company.tracker.database.repository.GeneralStatisticRepository;
 import com.company.tracker.entity.Course;
 import com.company.tracker.entity.StatisticRecord;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GeneralStatisticRepositoryImpl implements GeneralStatisticRepository {
@@ -18,6 +15,7 @@ public class GeneralStatisticRepositoryImpl implements GeneralStatisticRepositor
     private final int NUMBER_OF_POINTS_BY_SPRING = 550;
 
     private GeneralStatisticRepositoryImpl() {
+        this.statisticRecords = new ArrayList<>();
     }
 
     public static GeneralStatisticRepository getInstance() {
@@ -45,6 +43,7 @@ public class GeneralStatisticRepositoryImpl implements GeneralStatisticRepositor
 
         return statisticRecordsByCourse;
     }
+
 
     public int getAverageAssessmentByCourse(Course course) {
         List<StatisticRecord> statisticRecordsByCourse = getStatisticRecordByCourse(course);

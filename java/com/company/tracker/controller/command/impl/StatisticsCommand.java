@@ -22,11 +22,9 @@ public class StatisticsCommand implements Command, Input {
 
     @Override
     public String execute(String request) {
-        service.updateGeneralStatistic();
+
         if (request.equalsIgnoreCase(STATISTICS.get())) {
             Server.enableInputMode();
-            System.out.println(bundle.getString(STATISTICS.name()));
-
             return service.getCategoryStatistic().getStatisticsString();
         }
         return service.getDetailsStatisticByCourse(request).getStatisticsString();
