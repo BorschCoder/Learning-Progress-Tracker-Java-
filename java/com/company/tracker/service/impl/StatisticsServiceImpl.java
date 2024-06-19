@@ -90,9 +90,9 @@ public class StatisticsServiceImpl implements StatisticsService {
                         , entry.getValue()
                         , calculateCompletionPercentage(entry.getValue(), pointsForCompletingCourse)));
             }
-
+            return tableDetailStatistic.toString();
         }
-        return null;
+
     }
 
     private Map<Integer, Integer> getSortedPointsByCourse(Course course) {
