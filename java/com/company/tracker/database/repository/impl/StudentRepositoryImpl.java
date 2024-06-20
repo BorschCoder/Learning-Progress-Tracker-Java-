@@ -11,7 +11,7 @@ import java.util.*;
 
 public class StudentRepositoryImpl implements StudentRepository {
 
-    public static final Student EMPTY_STUDENT = new Student();
+    //public static final Student EMPTY_STUDENT = new Student();
 
     private static StudentRepositoryImpl instance;
 
@@ -34,7 +34,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student getEmptyStudent() {
-        return EMPTY_STUDENT;
+        return null;
     }
 
     public boolean add(Student student) {
@@ -57,6 +57,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> findAll() {
+        //System.out.println(students);
         return students;
     }
 
@@ -67,7 +68,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                 return Optional.of(student);
             }
         }
-        return Optional.of(EMPTY_STUDENT);
+        return Optional.ofNullable(getEmptyStudent());
     }
 
     @Override

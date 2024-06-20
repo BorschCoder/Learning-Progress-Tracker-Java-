@@ -1,22 +1,23 @@
 package com.company.tracker.service.impl;
 
+import com.company.tracker.controller.ResponseType;
 import com.company.tracker.database.repository.StudentRepository;
 import com.company.tracker.entity.*;
 import com.company.tracker.factory.RepositoryFactory;
 import com.company.tracker.factory.SingleRowStatisticFactory;
-import com.company.tracker.util.PointsParser;
-import com.company.tracker.util.StudentParser;
-import com.company.tracker.controller.ResponseType;
 import com.company.tracker.factory.StudentFactory;
 import com.company.tracker.service.StudentService;
+import com.company.tracker.util.PointsParser;
+import com.company.tracker.util.StudentParser;
 import com.company.tracker.validators.PointsValidator;
 import com.company.tracker.validators.StudentValidator;
 import com.company.tracker.validators.UniqueCheck;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static com.company.tracker.controller.ResponseType.*;
-import static com.company.tracker.entity.StudentCredential.*;
+import static com.company.tracker.entity.StudentCredential.EMAIL;
 
 
 public class StudentServiceImpl implements StudentService {
@@ -43,11 +44,13 @@ public class StudentServiceImpl implements StudentService {
     private final SingleRowStatisticFactory singleRowStatisticFactory;
 
     public Response getStudentById(int id) {
-        Student foundStudent = studentRepository.getStudentById(id).get();
-        if (foundStudent.equals(studentRepository.getEmptyStudent())) {
-            return new Response(NO_STUDENTS_BY_ID);
-        }
-        return new Response(ResponseType.SHOW_STATS, foundStudent.getId(), foundStudent.getStatistics().getStat());
+        Optional<Student> foundStudent = studentRepository.getStudentById(id);
+        return foundStudent.map(
+                student -> new Response(ResponseType.SHOW_STATS, student.getId(), student.getStatistics().getStat())
+                )
+                .orElseGet(
+                        () -> new Response(NO_STUDENTS_BY_ID)
+                );
     }
 
     public static int getCountStudent() {
@@ -73,6 +76,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentFactory.createStudent(studentInfo);
         studentRepository.add(student);
         countStudent = countStudent + 1;
+        //System.out.println("countStudent = " + countStudent);
         return new Response(responseType);
     }
 

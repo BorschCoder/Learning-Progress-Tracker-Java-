@@ -44,6 +44,17 @@ public class GeneralStatisticRepositoryImpl implements GeneralStatisticRepositor
         return statisticRecordsByCourse;
     }
 
+    public int getCountStudentsOnCourse(Course course) {
+
+        Set<Integer> idStudents = new HashSet<>();
+        List<StatisticRecord> statisticRecordsByCourse = getStatisticRecordByCourse(course);
+
+        for (StatisticRecord statisticRecords : statisticRecordsByCourse) {
+            idStudents.add(statisticRecords.getIdStudent());
+        }
+
+        return idStudents.size();
+    }
 
     public int getAverageAssessmentByCourse(Course course) {
         List<StatisticRecord> statisticRecordsByCourse = getStatisticRecordByCourse(course);

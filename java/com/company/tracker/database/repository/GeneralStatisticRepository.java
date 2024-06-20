@@ -18,4 +18,5 @@ public interface GeneralStatisticRepository {
     int getAverageAssessmentByCourse(Course course);
 
     int getNumberOfPointsByCourse(Course course);
+    int getCountStudentsOnCourse(Course course);
 }
