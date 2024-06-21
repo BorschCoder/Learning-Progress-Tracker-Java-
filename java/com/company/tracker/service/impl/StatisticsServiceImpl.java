@@ -44,11 +44,6 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public String getStatistics() {
-        return null;
-    }
-
-    @Override
     public Response getCategoryStatistic() {
         fillLeastMostPopCoursesMap();
         String responseString = String.format(bundleResponse.getString(ResponseType.GENERAL_STAT.name())
@@ -90,7 +85,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             tableDetailStatistic.append(String.format(bundleResponse.getString(ResponseType.TABLE_HEADER.name())
                     , bundleCourse.getString(course.name())));
             for (Map.Entry<Integer, Integer> entry : sortPointsByCourse.entrySet()) {
-                if (entry.getValue() ==0){
+                if (entry.getValue() == 0) {
                     continue;
                 }
                 tableDetailStatistic.append(String.format(bundleResponse.getString(ResponseType.TABLE_CONTENT.name()),
@@ -114,7 +109,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 if (pointResult != 0) {
                     return pointResult;
                 } else {
-                    return  first.getId()- second.getId();
+                    return first.getId() - second.getId();
                 }
             }
         });

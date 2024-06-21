@@ -91,6 +91,8 @@ public class Student {
         sb.append('}');
         return sb.toString();
     }
-
+    public String getFullName(){
+        return this.firstName +" "+this.secondName+" "+this.lastName;
+    }
 
 }

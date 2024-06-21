@@ -4,7 +4,6 @@ import com.company.tracker.entity.Course;
 import com.company.tracker.entity.Response;
 
 public interface StatisticsService {
-    String getStatistics();
 
     Response getCategoryStatistic();
 

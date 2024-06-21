@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentFactory.createStudent(studentInfo);
         studentRepository.add(student);
         countStudent = countStudent + 1;
-        //System.out.println("countStudent = " + countStudent);
+
         return new Response(responseType);
     }
 
@@ -101,12 +101,12 @@ public class StudentServiceImpl implements StudentService {
                 new Statistics(response.getStudentId(), courseInfo)
         );
 
-        recordSinglRowStatistic(courseInfo, response.getStudentId());
+        recordSingleRowStatistic(courseInfo, response.getStudentId());
 
         return new Response(POINTS_UPDATED);
     }
 
-    private void recordSinglRowStatistic(Map<Course, Integer> courseInfo, int studentId) {
+    private void recordSingleRowStatistic(Map<Course, Integer> courseInfo, int studentId) {
         for (Map.Entry<Course, Integer> entry : courseInfo.entrySet()) {
             if (entry.getValue() == 0) {
                 continue;

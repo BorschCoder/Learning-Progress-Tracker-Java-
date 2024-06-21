@@ -12,11 +12,9 @@ import java.util.ResourceBundle;
 import static com.company.tracker.controller.command.CommandType.STATISTICS;
 
 public class StatisticsCommand implements Command, Input {
-    private final ResourceBundle bundle;
     private final StatisticsService service;
 
     public StatisticsCommand(ResourceBundle bundle) {
-        this.bundle = bundle;
         this.service = StatisticsServiceImpl.getInstance();
     }
 

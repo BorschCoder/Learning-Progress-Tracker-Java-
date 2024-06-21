@@ -7,7 +7,7 @@ import com.company.tracker.service.impl.StudentServiceImpl;
 
 import java.util.ResourceBundle;
 
-import static com.company.tracker.controller.ResponseType.Credentials_STUDENTS;
+import static com.company.tracker.controller.ResponseType.CREDENTIALS_STUDENTS;
 import static com.company.tracker.controller.command.CommandType.ADD_STUDENTS;
 
 public class AddStudentCommand implements Command, Input {
@@ -24,7 +24,7 @@ public class AddStudentCommand implements Command, Input {
     public String execute(String request) {
         if (request.equalsIgnoreCase(ADD_STUDENTS.get())) {
             Server.enableInputMode();
-            return bundle.getString(Credentials_STUDENTS.name());
+            return bundle.getString(CREDENTIALS_STUDENTS.name());
         }
         return bundle.getString(service.add(request).getType().name());
     }

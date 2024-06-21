@@ -24,6 +24,7 @@ public final class CommandProvider {
         repository.put(STATISTICS, new StatisticsCommand(bundle));
         repository.put(UNDEFINED, new UndefinedCommand(bundle));
         repository.put(LIST, new ListCommand(bundle));
+        repository.put(NOTIFY, new NotifyCommand(bundle));
         repository.put(EXIT, new ExitCommand(bundle, repository.get(UNDEFINED)));
 
     }

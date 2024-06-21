@@ -10,11 +10,7 @@ import com.company.tracker.factory.DAOFactory;
 import java.util.*;
 
 public class StudentRepositoryImpl implements StudentRepository {
-
-    //public static final Student EMPTY_STUDENT = new Student();
-
     private static StudentRepositoryImpl instance;
-
 
     public static StudentRepositoryImpl getInstance() {
         if (instance == null) {
@@ -57,7 +53,6 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> findAll() {
-        //System.out.println(students);
         return students;
     }
 
@@ -87,8 +82,6 @@ public class StudentRepositoryImpl implements StudentRepository {
             );
         }
     }
-
-
 
 
 }

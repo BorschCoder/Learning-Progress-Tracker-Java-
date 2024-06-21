@@ -1,7 +1,7 @@
 package com.company.tracker.controller;
 
 public enum ResponseType {
-    Credentials_STUDENTS,
+    CREDENTIALS_STUDENTS,
     ADDED,
     BACK,
     EXIT,
@@ -21,6 +21,10 @@ public enum ResponseType {
     UnknownCourse,
     INCORRECT_POINTS_FORMAT,
     TABLE_HEADER,
-    TABLE_CONTENT;
+    TABLE_CONTENT,
+    RECIPIENT_STUDENT,
+    SENDER,
+    EMAIL_TEXT,
+    NOTIFIED_COUNT;
 
 }

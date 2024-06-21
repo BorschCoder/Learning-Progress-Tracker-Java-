@@ -9,6 +9,7 @@ public enum CommandType {
     FIND("find"),
     ADD_POINTS("add points"),
     STATISTICS("statistics"),
+    NOTIFY("notify"),
     UNDEFINED("");
     private final String type;
 
