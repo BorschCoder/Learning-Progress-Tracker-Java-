@@ -28,7 +28,7 @@ public class AntiSpamCheckerImpl {
         if (notifiedStudents.isEmpty()) {
             return true;
         }
-        return notifiedStudents.get(student).contains(course);
+        return !notifiedStudents.get(student).contains(course);
     }
 
 

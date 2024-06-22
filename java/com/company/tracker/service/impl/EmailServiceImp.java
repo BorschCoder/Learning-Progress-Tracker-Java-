@@ -48,8 +48,9 @@ public class EmailServiceImp implements EmailService {
         } else {
             StringBuilder responseString = new StringBuilder();
             for (Map.Entry<Student, List<Course>> entry : graduatedStudents.entrySet()) {
+                boolean notified = false;
                 for (Course course : entry.getValue()) {
-                    if (!antiSpamChecker.isFirstSending(entry.getKey(),course)){
+                    if (!antiSpamChecker.isFirstSending(entry.getKey(), course)) {
                         continue;
                     }
                     responseString.append(String.format(bundleResponse.getString(RECIPIENT_STUDENT.name())
@@ -59,10 +60,13 @@ public class EmailServiceImp implements EmailService {
 
                     responseString.append(String.format(bundleResponse.getString(EMAIL_TEXT.name())
                             , entry.getKey().getFullName(), bundleCourse.getString(course.name())));
+                    notified = true;
 
                 }
-                antiSpamChecker.addNotified(entry.getKey(),entry.getValue());
-                countNotifiedStudents += 1;
+                if (notified) {
+                    antiSpamChecker.addNotified(entry.getKey(), entry.getValue());
+                    countNotifiedStudents += 1;
+                }
             }
             responseString.append(String.format(bundleResponse.getString(NOTIFIED_COUNT.name())
                     , countNotifiedStudents));
